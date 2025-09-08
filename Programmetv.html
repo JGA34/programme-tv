@@ -21,10 +21,22 @@
     }
     li {
       background: #fff;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.8em;
       padding: 0.8em;
       border-radius: 6px;
       box-shadow: 0 1px 3px #ccc;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .program-info {
+      flex: 1;
+    }
+    .program-img {
+      width: 100px;
+      height: auto;
+      border-radius: 6px;
+      object-fit: cover;
     }
     .channel {
       font-weight: bold;
@@ -82,7 +94,6 @@
           if (!channel.programs) return;
 
           const candidates = channel.programs.filter(prog => {
-            // Correction: soustraire 2 heures (7200 secondes)
             const startUtcCorrected = prog.start - H2_SECONDS;
             const endUtcCorrected = prog.end - H2_SECONDS;
 
@@ -103,7 +114,6 @@
           });
 
           if (candidates.length > 0) {
-            // Garder le programme le plus récent (start corrigé le plus grand)
             const bestProg = candidates.reduce((max, curr) => ((curr.start - H2_SECONDS) > (max.start - H2_SECONDS) ? curr : max), candidates[0]);
 
             const startUtcCorrectedMs = (bestProg.start - H2_SECONDS) * 1000;
@@ -118,7 +128,8 @@
               hour: hourFormatted,
               title: bestProg.name,
               cat: bestProg.cat || '',
-              desc: bestProg.desc || ''
+              desc: bestProg.desc || '',
+              icon: bestProg.icon || '' // récupération de l'image
             };
           }
         });
@@ -135,11 +146,14 @@
           programs.forEach(p => {
             const li = document.createElement('li');
             li.innerHTML = `
-              <div class="channel">${p.channel}</div>
-              <div class="hour">${p.hour}</div>
-              <div class="title">${p.title}</div>
-              <div class="cat">${p.cat}</div>
-              <div class="desc">${p.desc}</div>
+              ${p.icon ? `<img src="${p.icon}" alt="${p.title}" class="program-img">` : ""}
+              <div class="program-info">
+                <div class="channel">${p.channel}</div>
+                <div class="hour">${p.hour}</div>
+                <div class="title">${p.title}</div>
+                <div class="cat">${p.cat}</div>
+                <div class="desc">${p.desc}</div>
+              </div>
             `;
             list.appendChild(li);
           });
