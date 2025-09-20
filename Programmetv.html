@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Programme TV soir 20h50-21h15 (heure Paris corrigée)</title>
+  <title>Programme TV soir</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,7 +73,7 @@
         const channels = json.data;
 
         const startWindow = 20 * 60 + 50;
-        const endWindow = 21 * 60 + 15;
+        const endWindow = 21 * 60 + 30;
         const H2_SECONDS = 2 * 3600; // 2 heures en secondes
 
         const dtf = new Intl.DateTimeFormat('fr-FR', {
@@ -164,3 +164,4 @@
   </script>
 </body>
 </html>
+
